@@ -38,6 +38,7 @@ Page {
 
     Audio {
         id: shotSound
+        autoLoad: false
         source: "/usr/share/sounds/freedesktop/stereo/camera-shutter.oga"
     }
 
