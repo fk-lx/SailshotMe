@@ -11,20 +11,20 @@ Description: |-
 Configure: none
 Builder: qtc5
 PkgConfigBR:
-- Qt5Core
-- Qt5Qml
-- Qt5Quick
 - sailfishapp
+- Qt5Quick
+- Qt5Qml
+- Qt5Core
 Requires:
-- nemo-qml-plugin-dbus-qt5
 - sailfishsilica-qt5
+- nemo-qml-plugin-dbus-qt5
 Files:
-- /usr/share/icons/hicolor/86x86/apps
-- /usr/share/applications
-- /usr/share/harbour-sailshotme
-- /usr/bin
-- '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
-- '%{_datadir}/applications/%{name}.desktop'
-- '%{_datadir}/%{name}/qml'
 - '%{_bindir}'
+- '%{_datadir}/%{name}/qml'
+- '%{_datadir}/applications/%{name}.desktop'
+- '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
+- /usr/bin
+- /usr/share/harbour-sailshotme
+- /usr/share/applications
+- /usr/share/icons/hicolor/86x86/apps
 PkgBR: []
