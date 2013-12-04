@@ -21,8 +21,10 @@
 import QtQuick 2.0
 import QtMultimedia 5.0
 import Sailfish.Silica 1.0
-import org.nemomobile.dbus 1.0
 
+//Cannot be used as it is considered unstable api
+//import org.nemomobile.dbus 1.0
+import harbour.sailshotme.nemodbusinterface 1.0
 
 CoverBackground {
 

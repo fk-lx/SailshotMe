@@ -10,9 +10,11 @@ TARGET = harbour-sailshotme
 
 #CONFIG += sailfishapp
 
+DEFINES += QT_VERSION_5
+
 # Start of temporary fix for the icon for the Nov 2013 harbour requirements by (thanks to AgileArtem :))
 # QML files and folders
-QT += quick qml
+QT += quick qml dbus
 CONFIG += link_pkgconfig
 PKGCONFIG += sailfishapp
 INCLUDEPATH += /usr/include/sailfishapp
@@ -40,7 +42,8 @@ INSTALLS += target icon desktop mixpanel qml
 
 
 
-SOURCES += src/harbour-sailshotme.cpp
+SOURCES += src/harbour-sailshotme.cpp \
+    src/nemodbus/src/declarativedbusinterface.cpp
 
 OTHER_FILES += qml/harbour-sailshotme.qml \
     qml/cover/CoverPage.qml \
@@ -50,4 +53,7 @@ OTHER_FILES += qml/harbour-sailshotme.qml \
     qml/pages/About.qml \
     qml/pages/MainPage.qml \
     src/LICENSE
+
+HEADERS += \
+    src/nemodbus/src/declarativedbusinterface.h
 
