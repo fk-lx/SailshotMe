@@ -19,34 +19,17 @@
 ****************************************************************************************/
 
 import QtQuick 2.0
-import QtMultimedia 5.0
 import Sailfish.Silica 1.0
-
-//Cannot be used as it is considered unstable api
-//import org.nemomobile.dbus 1.0
-import harbour.sailshotme.nemodbusinterface 1.0
 
 Page {
     id: page
 
-    property int delay
-    property int timeLeft
-
-    DBusInterface {
-        id: dbusiface
-        destination: "org.nemomobile.lipstick"
-        path: "/org/nemomobile/lipstick/screenshot"
-        iface: "org.nemomobile.lipstick"
-    }
-
-    Audio {
-        id: shotSound
-        autoLoad: false
-        source: "/usr/share/sounds/freedesktop/stereo/camera-shutter.oga"
-    }
+    signal newslidervalue(int value)
 
     SilicaFlickable {
         anchors.fill: parent
+        contentHeight: column.height
+
 
         PullDownMenu {
             MenuItem {
@@ -54,9 +37,6 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("About.qml"))
             }
         }
-
-        contentHeight: column.height
-
 
         Column {
             id: column
@@ -92,44 +72,44 @@ Page {
                 stepSize: 1
                 width: parent.width
                 anchors.horizontalCenter: parent.horizontalCenter
+
+                onDownChanged: {
+                    if (down == false) {
+                        newslidervalue(value)
+                    }
+                }
+
             }
 
-            Timer {
-                id: timer
-                interval: slider.value * 1000
-                onTriggered: {
-                    timersec.running = false
-                    dbusiface.call("saveScreenshot","")
-                    timerseclabel.opacity = 0
-                    shotSound.play()
+            Button {
+                text: "Take screenshot"
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                onClicked: {
+                    timeLeft = slider.value
+                    timer.interval = slider.value * 1000
+                    countdown = true
                 }
             }
 
             Button {
-                text: "Make screenshot"
+                id: cancelscrbtn
+                text: "Cancel screenshot"
                 anchors.horizontalCenter: parent.horizontalCenter
-                onClicked: {
-                    timeLeft = slider.value
-                    timerseclabel.opacity = 1
-                    timersec.running = true
-                    timer.running = true
+                opacity: countdown ? 1 : 0
+
+                Behavior on opacity {
+                    PropertyAnimation { duration: 200 }
                 }
-            }
 
-            Timer {
-                id: timersec
-                interval: 1000
-                repeat: true
-                running: false
-
-                onTriggered: {
-                    timeLeft -= 1
+                onClicked: {
+                    countdown = false
                 }
             }
 
             Label {
                 id: timerseclabel
-                opacity: 0
+                opacity: countdown ? 1 : 0
                 text: "Screenshot in <b>" + timeLeft + " seconds<b>"
                 x: Theme.paddingLarge
                 color: Theme.primaryColor

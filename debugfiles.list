@@ -1,8 +1,8 @@
 %dir /usr/lib/debug
 %dir /usr/lib/debug/.build-id
-%dir /usr/lib/debug/.build-id/3d
+%dir /usr/lib/debug/.build-id/99
 %dir /usr/lib/debug/usr
 %dir /usr/lib/debug/usr/bin
-/usr/lib/debug/.build-id/3d/c662ea9a89a3d49556ffd23cb052b4cac065f1.debug
-/usr/lib/debug/.build-id/3d/c662ea9a89a3d49556ffd23cb052b4cac065f1
+/usr/lib/debug/.build-id/99/d2a1408973030729e9e4eab245c8fe50d249eb.debug
+/usr/lib/debug/.build-id/99/d2a1408973030729e9e4eab245c8fe50d249eb
 /usr/lib/debug/usr/bin/harbour-sailshotme.debug

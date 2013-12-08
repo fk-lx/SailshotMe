@@ -7,6 +7,11 @@
 #include <QtGlobal>
 #include <QtQml>
 #include <QQmlExtensionPlugin>
+#include <QCamera>
+#include <QtMultimedia>
+//#include <QCamera>
+
+
 
 // Added until org.nemomobile.dbus becomes stable API
 

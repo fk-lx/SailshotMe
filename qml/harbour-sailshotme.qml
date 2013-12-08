@@ -19,21 +19,34 @@
 ****************************************************************************************/
 
 import QtQuick 2.0
+import QtMultimedia 5.0
 import Sailfish.Silica 1.0
 import "pages"
 import "cover"
 
+//Cannot be used as it is considered unstable api
+//import org.nemomobile.dbus 1.0
+import harbour.sailshotme.nemodbusinterface 1.0
+
 ApplicationWindow
 {
     id: app
-    property int delay //global delay before taking a screenshot
-    delay: 3
+
+    property int delay : 3 //delay before taking a screenshot
+    property int timeLeft //time left - to display on MainPage and CoverPage
+    property bool countdown //if screenshot countdown is active
+
+    countdown: false
 
     initialPage: Component {
 
         MainPage {
+            //delay: app.delay
 
-            delay: app.delay
+            onNewslidervalue: {
+                app.delay = value
+                console.log("Buuu!")
+            }
 
         }
     }
@@ -41,10 +54,43 @@ ApplicationWindow
     cover: Component {
 
         CoverPage {
-
-            delay: app.delay
+            id: cvpage
 
         }
     }
 
+    DBusInterface {
+        id: dbusiface
+        destination: "org.nemomobile.lipstick"
+        path: "/org/nemomobile/lipstick/screenshot"
+        iface: "org.nemomobile.lipstick"
+    }
+
+    Audio {
+        id: shotSound
+        autoLoad: false
+        source: "/usr/share/sounds/freedesktop/stereo/camera-shutter.oga"
+    }
+
+    Timer {
+        id: timer
+        running: countdown
+
+        onTriggered: {
+            countdown = false
+            dbusiface.call("saveScreenshot","")
+            shotSound.play()
+        }
+    }
+
+    Timer {
+        id: timersec
+        interval: 1000
+        repeat: true
+        running: countdown
+
+        onTriggered: {
+            timeLeft -= 1
+        }
+    }
 }

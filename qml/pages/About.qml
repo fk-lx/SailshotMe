@@ -39,7 +39,7 @@ Page {
             id: column
             x: Theme.paddingLarge
             width: page.width - x
-            spacing: Theme.paddingLarge
+            spacing: Theme.paddingMedium
 
             Label {
                 text: "SailshotMe Version 1.0"
@@ -50,7 +50,7 @@ Page {
             Label {
                 id: body
 
-                text: "This is a very simple app to take screenshots. If you want to help with it's development you are more than welcome as it has a lot of room for improvement. The source code will be (or already is) available on Github."
+                text: "This is a very simple app to take screenshots. If you want to help with it's development you are more than welcome as it has a lot of room for improvement. The source code is available on Github.<br \> The most parts of app are on GPLv3 license, except qml DBusInterface component, which origins from nemo-qml-plugin-dbus that is on LGPL 2.1 license."
 
                 font.pixelSize: Theme.fontSizeExtraSmall
                 wrapMode: Text.WordWrap
@@ -62,6 +62,8 @@ Page {
                     left: parent.left
                     right: parent.right
                 }
+
+                //onLinkActivated: Qt.openUrlExternally("https://github.com/fk-lx/SailshotMe/")
             }
 
             Label {
@@ -83,6 +85,11 @@ Page {
 
             Label {
                 text: "Thomas Rücker (for testing on real device)"
+                font.pixelSize: Theme.fontSizeExtraSmall
+            }
+
+            Label {
+                text: "John Brooks (for checking fixed version)"
                 font.pixelSize: Theme.fontSizeExtraSmall
             }
         }

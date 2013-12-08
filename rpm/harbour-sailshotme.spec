@@ -13,22 +13,21 @@ Name:       harbour-sailshotme
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Application to easily take screenshots on Sailfish
-Version:    1.0
-Release:    3
+Version:    1.1
+Release:    0
 Group:      Qt/Qt
 License:    LICENSE
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-sailshotme.yaml
 Requires:   sailfishsilica-qt5
-Requires:   nemo-qml-plugin-dbus-qt5
-BuildRequires:  pkgconfig(sailfishapp)
-BuildRequires:  pkgconfig(Qt5Quick)
-BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Core)
+BuildRequires:  pkgconfig(Qt5Qml)
+BuildRequires:  pkgconfig(Qt5Quick)
+BuildRequires:  pkgconfig(sailfishapp)
 BuildRequires:  desktop-file-utils
 
 %description
-Application let's you take screenshots by setting delay time before a screenshot. You can also use cover action to make a quick screenshot in 3 seconds.
+Application let's you take screenshots by setting delay time before a screenshot. You can also use cover action to make a screenshot.
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -62,13 +61,13 @@ desktop-file-install --delete-original       \
 
 %files
 %defattr(-,root,root,-)
-%{_bindir}
-%{_datadir}/%{name}/qml
-%{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/86x86/apps/%{name}.png
-/usr/bin
-/usr/share/harbour-sailshotme
-/usr/share/applications
 /usr/share/icons/hicolor/86x86/apps
+/usr/share/applications
+/usr/share/harbour-sailshotme
+/usr/bin
+%{_datadir}/icons/hicolor/86x86/apps/%{name}.png
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/%{name}/qml
+%{_bindir}
 # >> files
 # << files

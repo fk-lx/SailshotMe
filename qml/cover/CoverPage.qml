@@ -19,35 +19,16 @@
 ****************************************************************************************/
 
 import QtQuick 2.0
-import QtMultimedia 5.0
 import Sailfish.Silica 1.0
-
-//Cannot be used as it is considered unstable api
-//import org.nemomobile.dbus 1.0
-import harbour.sailshotme.nemodbusinterface 1.0
 
 CoverBackground {
 
-    property int delay
-
-    DBusInterface {
-        id: dbusiface
-        destination: "org.nemomobile.lipstick"
-        path: "/org/nemomobile/lipstick/screenshot"
-        iface: "org.nemomobile.lipstick"
-    }
-
-    Audio {
-        id: shotSound
-        autoLoad: false
-        source: "/usr/share/sounds/freedesktop/stereo/camera-shutter.oga"
-    }
-
     Label {
-        id: label
+        id: nonactivelabel
         anchors.top: parent.top
         anchors.topMargin: Theme.paddingMedium
         anchors.horizontalCenter: parent.horizontalCenter
+        opacity: countdown ? 0 : 1
         text: "Use cover<br> \
                action to<br /> \
                take a new<br /> \
@@ -55,27 +36,48 @@ CoverBackground {
                in <b>"+ delay +" secs</b>"
     }
 
-    Timer {
-        id: timer
-        interval: delay * 1000
-        onTriggered: {
-            dbusiface.call("saveScreenshot","")
-            shotSound.play()
+    Label {
+            opacity: countdown ? 1 : 0
+            anchors.top: parent.top
+            anchors.topMargin: Theme.paddingMedium
+            anchors.horizontalCenter: parent.horizontalCenter
+            font.pixelSize: Theme.fontSizeMedium
+            text: "Seconds till<br> \
+                   screenshot"
+
         }
+
+    Label {
+        id: countdownlabel
+        anchors.centerIn: parent
+        font.pixelSize: Theme.fontSizeHuge * 2.5
+        color: Theme.highlightColor
+        opacity: countdown ? 1 : 0
+        text: timeLeft
     }
 
     CoverActionList {
         id: coverAction
 
         CoverAction {
-            iconSource: "image://theme/icon-camera-shutter-release"
+            iconSource: countdown ? "image://theme/icon-cover-cancel": "image://theme/icon-camera-shutter-release"
 
             onTriggered: {
-                timer.running = true
+                if (countdown == false) {
+                    timeLeft = delay
+                    timer.interval = delay * 1000
+                    countdown = true
+                }
+                else {
+                    countdown = false
+                }
+
             }
+
         }
 
     }
+
 }
 
 
