@@ -42,7 +42,7 @@ Page {
             spacing: Theme.paddingMedium
 
             Label {
-                text: "SailshotMe Version 1.0"
+                text: "SailshotMe Version 1.1"
                 font.pixelSize: Theme.fontSizeMedium
                 color: Theme.highlightColor
             }

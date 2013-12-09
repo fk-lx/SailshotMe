@@ -14,7 +14,7 @@ DEFINES += QT_VERSION_5
 
 # Start of temporary fix for the icon for the Nov 2013 harbour requirements by (thanks to AgileArtem :))
 # QML files and folders
-QT += quick qml dbus multimedia
+QT += quick qml dbus
 CONFIG += link_pkgconfig
 PKGCONFIG += sailfishapp
 INCLUDEPATH += /usr/include/sailfishapp
