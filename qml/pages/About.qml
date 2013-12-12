@@ -38,7 +38,7 @@ Page {
         Column {
             id: column
             x: Theme.paddingLarge
-            width: page.width - x
+            width: page.width - 2 * x
             spacing: Theme.paddingMedium
 
             Label {
@@ -50,7 +50,9 @@ Page {
             Label {
                 id: body
 
-                text: "This is a very simple app to take screenshots. If you want to help with it's development you are more than welcome as it has a lot of room for improvement. The source code is available on Github.<br \> The most parts of app are on GPLv3 license, except qml DBusInterface component, which origins from nemo-qml-plugin-dbus that is on LGPL 2.1 license."
+                textFormat: Text.RichText
+                text: "<style>a:link { color: " + Theme.highlightColor +
+                      "; }</style>This is a very simple app to take screenshots. If you want to help with it's development you are more than welcome as it has a lot of room for improvement. The source code is available on <a href=\"https://github.com/fk-lx/SailshotMe\">Github</a>.<br \> The most parts of app are on GPLv3 license, except qml DBusInterface component, which origins from nemo-qml-plugin-dbus that is on LGPL 2.1 license."
 
                 font.pixelSize: Theme.fontSizeExtraSmall
                 wrapMode: Text.WordWrap
@@ -63,7 +65,7 @@ Page {
                     right: parent.right
                 }
 
-                //onLinkActivated: Qt.openUrlExternally("https://github.com/fk-lx/SailshotMe/")
+                onLinkActivated: Qt.openUrlExternally("https://github.com/fk-lx/SailshotMe/")
             }
 
             Label {

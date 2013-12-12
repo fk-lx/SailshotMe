@@ -14,7 +14,7 @@ Name:       harbour-sailshotme
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Application to easily take screenshots on Sailfish
 Version:    1.1
-Release:    1
+Release:    2
 Group:      Qt/Qt
 License:    LICENSE
 Source0:    %{name}-%{version}.tar.bz2

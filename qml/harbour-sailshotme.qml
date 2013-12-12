@@ -41,11 +41,9 @@ ApplicationWindow
     initialPage: Component {
 
         MainPage {
-            //delay: app.delay
 
             onNewslidervalue: {
                 app.delay = value
-                console.log("Buuu!")
             }
 
         }
