@@ -86,6 +86,11 @@ Page {
             }
 
             Label {
+                text: "Stanisław Dac (for the new icon)"
+                font.pixelSize: Theme.fontSizeExtraSmall
+            }
+
+            Label {
                 text: "Thomas Rücker (for testing on real device)"
                 font.pixelSize: Theme.fontSizeExtraSmall
             }
