@@ -28,7 +28,7 @@ CoverBackground {
         anchors.top: parent.top
         anchors.topMargin: Theme.paddingMedium
         anchors.horizontalCenter: parent.horizontalCenter
-        opacity: countdown ? 0 : 1
+        opacity: !countdown && (repetitions <= 1) ? 1 : 0
         text: "Use cover<br> \
                action to<br /> \
                take a new<br /> \
@@ -37,23 +37,57 @@ CoverBackground {
     }
 
     Label {
-            opacity: countdown ? 1 : 0
-            anchors.top: parent.top
-            anchors.topMargin: Theme.paddingMedium
-            anchors.horizontalCenter: parent.horizontalCenter
-            font.pixelSize: Theme.fontSizeMedium
-            text: "Seconds till<br> \
-                   screenshot"
+        id: nonactivelabelrepetitions
+        anchors.top: parent.top
+        anchors.topMargin: Theme.paddingMedium
+        anchors.horizontalCenter: parent.horizontalCenter
+        opacity: !countdown && (repetitions > 1) ? 1 : 0
+        text: "Use cover<br> \
+               action to<br /> \
+               take a new<br /> \
+               <b>" + repetitions + "</b> screenshots<br /> \
+               every <b>"+ delay +" secs</b>"
+    }
 
-        }
+    Label {
+        id: activelabel
+        opacity: countdown ? 1 : 0
+        anchors.top: parent.top
+        anchors.topMargin: (repetitions > 1) ? Theme.paddingSmall : Theme.paddingMedium
+        anchors.horizontalCenter: parent.horizontalCenter
+        font.pixelSize: (repetitions > 1) ? Theme.fontSizeSmall : Theme.fontSizeMedium
+        text: "Seconds till<br>\
+              screenshot"
+    }
+
+    Label {
+        id: countdownlabelrepetitions
+        anchors.top: activelabel.bottom
+        anchors.topMargin: Theme.paddingSmall
+        anchors.horizontalCenter: parent.horizontalCenter
+        font.pixelSize: Theme.fontSizeMedium * 2.5
+        color: Theme.highlightColor
+        opacity: countdown && (repetitions > 1) ? 1 : 0
+        text: timeLeft
+    }
 
     Label {
         id: countdownlabel
         anchors.centerIn: parent
         font.pixelSize: Theme.fontSizeHuge * 2.5
         color: Theme.highlightColor
-        opacity: countdown ? 1 : 0
+        opacity: countdown && (repetitions <= 1) ? 1 : 0
         text: timeLeft
+    }
+
+    Label {
+        opacity: (countdown && repetitions > 1)  ? 1 : 0
+        anchors.top: countdownlabelrepetitions.bottom
+        anchors.topMargin: Theme.paddingSmall
+        anchors.horizontalCenter: parent.horizontalCenter
+        font.pixelSize: Theme.fontSizeSmall
+        text: "Screenshots <br> \
+               left: <b>" + repetitionsLeft + "</b><br>"
     }
 
     CoverActionList {
@@ -66,6 +100,7 @@ CoverBackground {
                 if (countdown == false) {
                     timeLeft = delay
                     timer.interval = delay * 1000
+                    repetitionsLeft = repetitions
                     countdown = true
                 }
                 else {
