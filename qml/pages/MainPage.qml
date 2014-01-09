@@ -25,6 +25,7 @@ Page {
     id: page
 
     signal newslidervalue(int value)
+    signal newrepetitionsslidevalue(int value)
 
     SilicaFlickable {
         anchors.fill: parent
@@ -41,7 +42,7 @@ Page {
         Column {
             id: column
             width: parent.width
-            spacing: Theme.paddingLarge
+            spacing: Theme.paddingMedium
 
             PageHeader {
                 title: "SailshotMe"
@@ -81,13 +82,49 @@ Page {
 
             }
 
+            Label {
+                x: Theme.paddingLarge
+                width: parent.width - x
+                text: "Select how many screenshots you would like to take:"
+                wrapMode: Text.WordWrap
+                color: Theme.primaryColor
+                font.pixelSize: Theme.fontSizeSmall
+            }
+
+            Label {
+                x: Theme.paddingLarge
+                text: repetitionsSlider.value + " screenshots"
+                color: Theme.primaryColor
+                font.pixelSize: Theme.fontSizeSmall
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            Slider {
+                id: repetitionsSlider
+                minimumValue: 1
+                maximumValue: 60
+                value: repetitions
+                stepSize: 1
+                width: parent.width
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                onDownChanged: {
+                    if (down == false) {
+                        newrepetitionsslidevalue(value)
+                    }
+                }
+
+            }
+
             Button {
-                text: "Take screenshot"
+                id: takescrbtn
+                text: (repetitions > 1)? "Take screenshots": "Take screenshot"
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 onClicked: {
                     timeLeft = slider.value
                     timer.interval = slider.value * 1000
+                    repetitionsLeft = repetitionsSlider.value
                     countdown = true
                 }
             }
@@ -110,7 +147,21 @@ Page {
             Label {
                 id: timerseclabel
                 opacity: countdown ? 1 : 0
-                text: "Screenshot in <b>" + timeLeft + " seconds<b>"
+                text: "Screenshot in <b>" + timeLeft + " seconds</b>"
+                x: Theme.paddingLarge
+                color: Theme.primaryColor
+                font.pixelSize: Theme.fontSizeSmall
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                Behavior on opacity {
+                    PropertyAnimation { duration: 200 }
+                }
+            }
+
+            Label {
+                id: repetitionslabel
+                opacity: countdown && repetitions > 1 ? 1 : 0
+                text: "<b>" + repetitionsLeft + "</b> screenshots to take"
                 x: Theme.paddingLarge
                 color: Theme.primaryColor
                 font.pixelSize: Theme.fontSizeSmall

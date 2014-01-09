@@ -34,6 +34,8 @@ ApplicationWindow
 
     property int delay : 3 //delay before taking a screenshot
     property int timeLeft //time left - to display on MainPage and CoverPage
+    property int repetitions : 1 //how many screnshots to take if taking multiple screenshots
+    property int repetitionsLeft //how many screenshots left to take
     property bool countdown //if screenshot countdown is active
 
     countdown: false
@@ -44,6 +46,9 @@ ApplicationWindow
 
             onNewslidervalue: {
                 app.delay = value
+            }
+            onNewrepetitionsslidevalue: {
+                app.repetitions = value
             }
 
         }
@@ -78,6 +83,13 @@ ApplicationWindow
             countdown = false
             dbusiface.call("saveScreenshot","")
             shotSound.play()
+            repetitionsLeft--;
+
+            if (repetitionsLeft > 0) {
+                timeLeft = delay
+                timer.interval = delay * 1000
+                countdown = true
+            }
         }
     }
 
