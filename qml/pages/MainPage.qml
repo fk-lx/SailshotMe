@@ -42,7 +42,11 @@ Page {
         Column {
             id: column
             width: parent.width
-            spacing: Theme.paddingMedium
+            spacing: Theme.paddingSmall
+
+            move: Transition {
+                NumberAnimation { properties: "x,y"; duration: 200 }
+            }
 
             PageHeader {
                 title: "SailshotMe"
@@ -82,6 +86,15 @@ Page {
 
             }
 
+            TextSwitch {
+                id: repetitionsSwitch
+                text: "Take multiple screenshots?"
+
+                onCheckedChanged: {
+                    checked ? repetitionsEnabled = true : repetitionsEnabled = false
+                }
+            }
+
             Label {
                 x: Theme.paddingLarge
                 width: parent.width - x
@@ -89,6 +102,12 @@ Page {
                 wrapMode: Text.WordWrap
                 color: Theme.primaryColor
                 font.pixelSize: Theme.fontSizeSmall
+                visible: repetitionsEnabled
+                opacity: repetitionsEnabled ? 1 : 0
+
+                Behavior on opacity {
+                    PropertyAnimation { duration: 200 }
+                }
             }
 
             Label {
@@ -97,6 +116,12 @@ Page {
                 color: Theme.primaryColor
                 font.pixelSize: Theme.fontSizeSmall
                 anchors.horizontalCenter: parent.horizontalCenter
+                visible: repetitionsEnabled
+                opacity: repetitionsEnabled ? 1 : 0
+
+                Behavior on opacity {
+                    PropertyAnimation { duration: 200 }
+                }
             }
 
             Slider {
@@ -107,6 +132,8 @@ Page {
                 stepSize: 1
                 width: parent.width
                 anchors.horizontalCenter: parent.horizontalCenter
+                visible: repetitionsEnabled
+                opacity: repetitionsEnabled ? 1 : 0
 
                 onDownChanged: {
                     if (down == false) {
@@ -114,17 +141,22 @@ Page {
                     }
                 }
 
+                Behavior on opacity {
+                    PropertyAnimation { duration: 200 }
+                }
             }
 
             Button {
                 id: takescrbtn
-                text: (repetitions > 1)? "Take screenshots": "Take screenshot"
+                text: (repetitions > 1 && repetitionsEnabled)? "Take screenshots": "Take screenshot"
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 onClicked: {
                     timeLeft = slider.value
                     timer.interval = slider.value * 1000
-                    repetitionsLeft = repetitionsSlider.value
+                    timer.restart()
+                    repetitionsLeft = (repetitionsEnabled) ? repetitionsSlider.value : 0
+                    repetitionsInProgress = (repetitionsEnabled && repetitions >1) ? true : false
                     countdown = true
                 }
             }
@@ -160,7 +192,7 @@ Page {
 
             Label {
                 id: repetitionslabel
-                opacity: countdown && repetitions > 1 ? 1 : 0
+                opacity: countdown && repetitionsInProgress ? 1 : 0
                 text: "<b>" + repetitionsLeft + "</b> screenshots to take"
                 x: Theme.paddingLarge
                 color: Theme.primaryColor

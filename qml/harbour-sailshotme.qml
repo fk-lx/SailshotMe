@@ -37,6 +37,8 @@ ApplicationWindow
     property int repetitions : 1 //how many screnshots to take if taking multiple screenshots
     property int repetitionsLeft //how many screenshots left to take
     property bool countdown //if screenshot countdown is active
+    property bool repetitionsEnabled : false //if repetitions are enabled
+    property bool repetitionsInProgress : false //useful when user changes parameters during countdown
 
     countdown: false
 
@@ -82,6 +84,7 @@ ApplicationWindow
         onTriggered: {
             countdown = false
             dbusiface.call("saveScreenshot","")
+            console.log('scrot');
             shotSound.play()
             repetitionsLeft--;
 

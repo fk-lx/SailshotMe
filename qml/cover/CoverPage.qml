@@ -28,7 +28,7 @@ CoverBackground {
         anchors.top: parent.top
         anchors.topMargin: Theme.paddingMedium
         anchors.horizontalCenter: parent.horizontalCenter
-        opacity: !countdown && (repetitions <= 1) ? 1 : 0
+        opacity: !countdown && (repetitions <= 1 || !repetitionsEnabled) ? 1 : 0
         text: "Use cover<br> \
                action to<br /> \
                take a new<br /> \
@@ -41,7 +41,7 @@ CoverBackground {
         anchors.top: parent.top
         anchors.topMargin: Theme.paddingMedium
         anchors.horizontalCenter: parent.horizontalCenter
-        opacity: !countdown && (repetitions > 1) ? 1 : 0
+        opacity: !countdown && (repetitions > 1) && repetitionsEnabled ? 1 : 0
         text: "Use cover<br> \
                action to<br /> \
                take a new<br /> \
@@ -53,9 +53,9 @@ CoverBackground {
         id: activelabel
         opacity: countdown ? 1 : 0
         anchors.top: parent.top
-        anchors.topMargin: (repetitions > 1) ? Theme.paddingSmall : Theme.paddingMedium
+        anchors.topMargin: repetitionsInProgress ? Theme.paddingSmall : Theme.paddingMedium
         anchors.horizontalCenter: parent.horizontalCenter
-        font.pixelSize: (repetitions > 1) ? Theme.fontSizeSmall : Theme.fontSizeMedium
+        font.pixelSize: repetitionsInProgress ? Theme.fontSizeSmall : Theme.fontSizeMedium
         text: "Seconds till<br>\
               screenshot"
     }
@@ -67,7 +67,7 @@ CoverBackground {
         anchors.horizontalCenter: parent.horizontalCenter
         font.pixelSize: Theme.fontSizeMedium * 2.5
         color: Theme.highlightColor
-        opacity: countdown && (repetitions > 1) ? 1 : 0
+        opacity: countdown && repetitionsInProgress ? 1 : 0
         text: timeLeft
     }
 
@@ -76,12 +76,12 @@ CoverBackground {
         anchors.centerIn: parent
         font.pixelSize: Theme.fontSizeHuge * 2.5
         color: Theme.highlightColor
-        opacity: countdown && (repetitions <= 1) ? 1 : 0
+        opacity: countdown && !repetitionsInProgress ? 1 : 0
         text: timeLeft
     }
 
     Label {
-        opacity: (countdown && repetitions > 1)  ? 1 : 0
+        opacity: (countdown && repetitionsInProgress)  ? 1 : 0
         anchors.top: countdownlabelrepetitions.bottom
         anchors.topMargin: Theme.paddingSmall
         anchors.horizontalCenter: parent.horizontalCenter
@@ -100,7 +100,9 @@ CoverBackground {
                 if (countdown == false) {
                     timeLeft = delay
                     timer.interval = delay * 1000
-                    repetitionsLeft = repetitions
+                    timer.restart()
+                    repetitionsLeft = (repetitionsEnabled) ? repetitions : 0
+                    repetitionsInProgress = (repetitionsEnabled && repetitions >1) ? true : false
                     countdown = true
                 }
                 else {
