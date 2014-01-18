@@ -73,7 +73,7 @@ Page {
                 id: slider
                 minimumValue: 1
                 maximumValue: 60
-                value: delay
+                value: delaySliderVal
                 stepSize: 1
                 width: parent.width
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -152,6 +152,7 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 onClicked: {
+                    delay = delaySliderVal
                     timeLeft = slider.value
                     timer.interval = slider.value * 1000
                     timer.restart()

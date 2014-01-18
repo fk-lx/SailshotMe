@@ -32,7 +32,8 @@ ApplicationWindow
 {
     id: app
 
-    property int delay : 3 //delay before taking a screenshot
+    property int delay //delay before taking a screenshot
+    property int delaySliderVal : 3 //delay value set by user
     property int timeLeft //time left - to display on MainPage and CoverPage
     property int repetitions : 1 //how many screnshots to take if taking multiple screenshots
     property int repetitionsLeft //how many screenshots left to take
@@ -47,7 +48,7 @@ ApplicationWindow
         MainPage {
 
             onNewslidervalue: {
-                app.delay = value
+                app.delaySliderVal = value
             }
             onNewrepetitionsslidevalue: {
                 app.repetitions = value
@@ -84,7 +85,6 @@ ApplicationWindow
         onTriggered: {
             countdown = false
             dbusiface.call("saveScreenshot","")
-            console.log('scrot');
             shotSound.play()
             repetitionsLeft--;
 

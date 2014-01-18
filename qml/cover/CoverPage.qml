@@ -33,7 +33,7 @@ CoverBackground {
                action to<br /> \
                take a new<br /> \
                screenshot<br /> \
-               in <b>"+ delay +" secs</b>"
+               in <b>"+ delaySliderVal +" secs</b>"
     }
 
     Label {
@@ -46,7 +46,7 @@ CoverBackground {
                action to<br /> \
                take a new<br /> \
                <b>" + repetitions + "</b> screenshots<br /> \
-               every <b>"+ delay +" secs</b>"
+               every <b>"+ delaySliderVal +" secs</b>"
     }
 
     Label {
@@ -98,6 +98,7 @@ CoverBackground {
 
             onTriggered: {
                 if (countdown == false) {
+                    delay = delaySliderVal
                     timeLeft = delay
                     timer.interval = delay * 1000
                     timer.restart()
