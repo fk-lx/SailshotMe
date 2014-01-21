@@ -13,8 +13,8 @@ Name:       harbour-sailshotme
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Application to easily take screenshots on Sailfish
-Version:    1.1
-Release:    3
+Version:    1.2
+Release:    0
 Group:      Qt/Qt
 License:    LICENSE
 Source0:    %{name}-%{version}.tar.bz2
@@ -27,7 +27,7 @@ BuildRequires:  pkgconfig(sailfishapp)
 BuildRequires:  desktop-file-utils
 
 %description
-Application let's you take screenshots by setting delay time before a screenshot. You can also use cover action to make a screenshot.
+Application let's you take screenshots by setting delay time before a screenshot is being made. New version provides option to do multiple screenshots. You can also use cover action in order to make screenshots.
 
 %prep
 %setup -q -n %{name}-%{version}

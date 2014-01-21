@@ -42,7 +42,7 @@ Page {
             spacing: Theme.paddingMedium
 
             Label {
-                text: "SailshotMe Version 1.1"
+                text: "SailshotMe Version 1.2"
                 font.pixelSize: Theme.fontSizeMedium
                 color: Theme.highlightColor
             }
@@ -87,6 +87,11 @@ Page {
 
             Label {
                 text: "Stanisław Dac (for the new icon)"
+                font.pixelSize: Theme.fontSizeExtraSmall
+            }
+
+            Label {
+                text: "Dawid Mazur (option to take multiple screenshots)"
                 font.pixelSize: Theme.fontSizeExtraSmall
             }
 
