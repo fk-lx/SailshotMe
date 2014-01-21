@@ -32,9 +32,14 @@ ApplicationWindow
 {
     id: app
 
-    property int delay : 3 //delay before taking a screenshot
+    property int delay //delay before taking a screenshot
+    property int delaySliderVal : 3 //delay value set by user
     property int timeLeft //time left - to display on MainPage and CoverPage
+    property int repetitions : 1 //how many screnshots to take if taking multiple screenshots
+    property int repetitionsLeft //how many screenshots left to take
     property bool countdown //if screenshot countdown is active
+    property bool repetitionsEnabled : false //if repetitions are enabled
+    property bool repetitionsInProgress : false //useful when user changes parameters during countdown
 
     countdown: false
 
@@ -43,7 +48,10 @@ ApplicationWindow
         MainPage {
 
             onNewslidervalue: {
-                app.delay = value
+                app.delaySliderVal = value
+            }
+            onNewrepetitionsslidevalue: {
+                app.repetitions = value
             }
 
         }
@@ -78,6 +86,13 @@ ApplicationWindow
             countdown = false
             dbusiface.call("saveScreenshot","")
             shotSound.play()
+            repetitionsLeft--;
+
+            if (repetitionsLeft > 0) {
+                timeLeft = delay
+                timer.interval = delay * 1000
+                countdown = true
+            }
         }
     }
 
