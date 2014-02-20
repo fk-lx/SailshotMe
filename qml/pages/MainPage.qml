@@ -27,10 +27,15 @@ Page {
     signal newslidervalue(int value)
     signal newrepetitionsslidevalue(int value)
 
+    onStatusChanged: {
+        if (status === PageStatus.Active) {
+            pageStack.pushAttached(Qt.resolvedUrl("Settings.qml"))
+        }
+    }
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: column.height
-
 
         PullDownMenu {
             MenuItem {
