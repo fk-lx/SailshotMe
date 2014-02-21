@@ -40,6 +40,7 @@ ApplicationWindow
     property bool countdown //if screenshot countdown is active
     property bool repetitionsEnabled : false //if repetitions are enabled
     property bool repetitionsInProgress : false //useful when user changes parameters during countdown
+    property bool soundsEnabled : false //if sounds are enabled
 
     countdown: false
 
@@ -53,7 +54,6 @@ ApplicationWindow
             onNewrepetitionsslidevalue: {
                 app.repetitions = value
             }
-
         }
     }
 
@@ -61,8 +61,11 @@ ApplicationWindow
 
         CoverPage {
             id: cvpage
-
         }
+    }
+
+    Settings {
+        id: settingsPage
     }
 
     DBusInterface {
@@ -75,6 +78,7 @@ ApplicationWindow
     Audio {
         id: shotSound
         autoLoad: false
+        muted: soundsEnabled ? false : true
         source: "/usr/share/sounds/freedesktop/stereo/camera-shutter.oga"
     }
 
